@@ -190,7 +190,7 @@ being a very unsurprising syntax, I think.
 Ben: Yeah, it's just— we're composing elements of the syntax that already
 exist in other places. Again, it is, in my mind, it is a change that makes the
 language smaller, because, you know, it's— instead of having to say, "hey, you
-can't use this here," it's kind of just, like, everything works as you expect.  
+can't use this here," it's kind of just, like, everything works as you expect.
 And then the question is, like, well, like the— kind of, like, my proposal for
 this, back in the RFC a long time ago was kind of, hey, like, this doesn't mean
 that we can't, sometime in the future, have syntax dedicated for, like,

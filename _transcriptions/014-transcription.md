@@ -120,7 +120,7 @@ Rust, if you want to, in a pattern, ignore exactly one thing, like one field in
 a struct, or like, one item in an array, you use the underscore. And they also
 have the `..` pattern, which says, you know, ignore all the fields in this, or
 all the items in this array. And so it just kind of like lets you, you know,
-avoid writing a bunch of underscores— underscore comma, underscore comma, etc.
+avoid writing a bunch of underscores— `_, _,` etc.
 And so it's kind of like, `..` is "ignore everything inside of this." And so
 now, in these slice patterns, you can have, like, a few different things. You
 can say, hey, I want to, like— the example given in the blog post for 1.42 is

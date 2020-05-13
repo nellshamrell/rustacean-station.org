@@ -34,12 +34,12 @@ have an impact for people. And one of the first ones of these is that you
 finally get useful line numbers in `Option` and `Result` panic messages.
 
 Ben: This is kind of, it's it's somewhat of a revelation. It's one of those
-long standing issues that people were like-- it's kind of you accept it as a
+long standing issues that people were like— it's kind of you accept it as a
 way things are, like, obviously, if you panic, you're never going to get like a
 good line number in the error message. It's always going to point to the
 standard library. And I think people who have been using Rust for a long time
 might be kind of, habituated to even ignore the output of the panic message.
-But you have to unlearn that because now they're actually useful, which is--
+But you have to unlearn that because now they're actually useful, which is—
 it's amazing. It's a revelation.
 
 Jon: Yeah, I know, right? Or like, I always have `RUST_BACKTRACE` set to 1 in
@@ -52,7 +52,7 @@ Ben: Yeah. Do you want to talk more about how the compiler achieves this and
 whether or not users can use this in their own code?
 
 Jon: Yeah. So this actually required some kind of subtle changes internally in
-Rust, because what is needed here is to sort of-- `unwrap` needs to know where
+Rust, because what is needed here is to sort of— `unwrap` needs to know where
 it was called from. And so the way this has been implemented internally is this
 new annotation called `track_caller`. You can't actually use the annotation
 yourself on stable Rust, although you can on nightly behind a feature flag. And
@@ -89,10 +89,10 @@ this slice is, you know, the empty slice, just like an open bracket, close
 bracket, do this. If it contains one element, you can, like, bind the first
 element to this, and then do two, if it contains two elements, you could do
 this, and give it a default pattern, for, "I don't know how many are in the
-slice", which you have to, because there's-- slices don't have any kind of
+slice", which you have to, because there's— slices don't have any kind of
 compile-time information about their size.
 
-In this case, now, you can do something different. So if you're-- I think
+In this case, now, you can do something different. So if you're— I think
 JavaScript has had this for a while now, where you can kind of, like, there's
 this "dot dot" operator, the "rest" operator, they call it, or I guess it's
 `...` in JavaScript. But you can say, hey, like, now in a pattern in Rust, you
@@ -106,7 +106,7 @@ Jon: So I was going to say, like, so some might argue that this is, like,
 extending the syntax, right?  Like you're adding more complex syntax to Rust.
 Do you feel like that's true about this feature?
 
-Ben: No, actually, I think this is a case of-- I judge language features based
+Ben: No, actually, I think this is a case of— I judge language features based
 on whether or not they make the documentation larger or smaller. And in this
 case, I think this is a change that makes documentation smaller, because
 generally, if you have a feature and then you have to say, "but you can't use
@@ -115,15 +115,15 @@ you have made your language smaller.
 
 And so I'm not sure if you've ever seen, like, a struct where you want to,
 like, you know, use, like, you know, I want to say like, hey, I have this
-struct, or I have this thing, and I put, you know-- let me back up.  So in
+struct, or I have this thing, and I put, you know— let me back up.  So in
 Rust, if you want to, in a pattern, ignore exactly one thing, like one field in
 a struct, or like, one item in an array, you use the underscore. And they also
 have the `..` pattern, which says, you know, ignore all the fields in this, or
 all the items in this array. And so it just kind of like lets you, you know,
-avoid writing a bunch of underscores-- underscore comma, underscore comma, etc.
+avoid writing a bunch of underscores— underscore comma, underscore comma, etc.
 And so it's kind of like, `..` is "ignore everything inside of this." And so
 now, in these slice patterns, you can have, like, a few different things. You
-can say, hey, I want to, like-- the example given in the blog post for 1.42 is
+can say, hey, I want to, like— the example given in the blog post for 1.42 is
 you have, like, a hello world. You know, a slice that says "hello, comma,
 world, comma." And then you might have, like, you know, some other things on
 the end and then you can say, I want to match on the slice, it says "hello,
@@ -131,7 +131,7 @@ comma, world, comma, dot dot", And then, if the slice has anything else after
 hello world, it will still match that arm of the pattern. And obviously there
 are some restrictions here where you can't have more than one `..` in a single
 pattern. Because you have to know, like, understand, where should I, you know,
-look for-- What parts should I ignore? What parts should I think are concrete?
+look for— What parts should I ignore? What parts should I think are concrete?
 And so, you can have `..` at the end, in the middle, at the beginning,
 anywhere. But only one of them.
 
@@ -166,7 +166,7 @@ go through and make it work properly.  Thanks to some heroic efforts over the
 past year or so, people have finally managed to actually make @-patterns sound
 again and operate the way they should operate. And so an @-pattern kind of,
 let's you say, hey, like, I want to match on this pattern but also bind the
-entire thing -- not just the inside, but the entire thing -- to some name.
+entire thing — not just the inside, but the entire thing — to some name.
 
 Jon: Well, specifically, bind it to this name if it matches.
 
@@ -187,15 +187,15 @@ it, is just like `[a, b@.., c]`, where the `b@..` just says, hey, we're using
 Jon: Yeah, I feel like it's it's really neat, right? In some sense it ends up
 being a very unsurprising syntax, I think.
 
-Ben: Yeah, it's just-- we're composing elements of the syntax that already
+Ben: Yeah, it's just— we're composing elements of the syntax that already
 exist in other places. Again, it is, in my mind, it is a change that makes the
-language smaller, because, you know, it's-- instead of having to say, "hey, you
+language smaller, because, you know, it's— instead of having to say, "hey, you
 can't use this here," it's kind of just, like, everything works as you expect.  
-And then the question is, like, well, like the-- kind of, like, my proposal for
+And then the question is, like, well, like the— kind of, like, my proposal for
 this, back in the RFC a long time ago was kind of, hey, like, this doesn't mean
 that we can't, sometime in the future, have syntax dedicated for, like,
 sub-slicing, in a way. And I think there's there's even an argument that we
-should. There are languages that-- so generally in Rust, like, a pattern is the
+should. There are languages that— so generally in Rust, like, a pattern is the
 opposite of some kind of like construction. So you're, like, destructing and
 constructing are two sides of the same coin. And so, for example, in a pattern,
 if you use an ampersand, to, like, match a reference, that means, like, the
@@ -210,8 +210,8 @@ then, like, kind of, like, explode it outward and, yeah, actually, it is
 sometimes. And so other languages like Python have this, kind of like
 "unpacking," in a way. I think that's that's the asterisk operator and Python
 does this, where if I have, like, you know, a list in Python. So `[1, 2, 3]`,
-or, say I want to-- Let's say I have a list where it's `[2, 3, 4]`, and then I
-have-- I want to say, make a new list. And so I might say, you know, `a = [1,
+or, say I want to— Let's say I have a list where it's `[2, 3, 4]`, and then I
+have— I want to say, make a new list. And so I might say, you know, `a = [1,
 *b, 5]`, when b is my previous list. And then, you know, a is now `[1, 2, 3, 4,
 5]`. And so I can unpack arrays into other arrays, which is just the opposite
 of what's happening here. So whereas in this case, we are kind of saying, hey,
@@ -223,16 +223,16 @@ enough that it would work for both pattern contexts and normal contexts.
 Jon: Right. And ideally, I guess you would want it to mirror the syntax that's
 now been introduced for matching them.
 
-Ben: Yeah, and so-- but again, this is not new syntax. All the syntax here is
+Ben: Yeah, and so— but again, this is not new syntax. All the syntax here is
 just like old syntax used in ways that are totally composable. The, kind of
 like, the little thorny thing is that we do somewhat already have, like, in
 non-pattern contexts and normal expression contexts, a way of doing this. And
-if you look at-- if you ever use the functional struct updating syntax, this is
+if you look at— if you ever use the functional struct updating syntax, this is
 kind of similar. Where in a struct if you have, like, one instance of a struct,
-and you want to make a different instance, and you want to reuse-- overwrite
+and you want to make a different instance, and you want to reuse— overwrite
 one struct with a different struct's fields, you can say, hey, you know, I can
 have struct a, brace, list some fields, and then do comma, and then, dot dot,
-the name of the other struct instance. And then it will-- any fields that you
+the name of the other struct instance. And then it will— any fields that you
 didn't name yourself, it will overwrite your new struct's fields, with the
 fields from the old struct.
 
@@ -317,7 +317,7 @@ the `Error` trait in Rust has a function `description`, and the `description`
 function has a signature of, reference to self, returns a reference to a str.
 And initially, this made sense, right? Like, you want to describe this error
 and you want to give a string back and it shouldn't need to be an owned string,
-because why would it? Unfortunately, this has the downside that it can-- it
+because why would it? Unfortunately, this has the downside that it can— it
 basically has to be a static string or some string that's stored inside the
 error itself. But imagine that, like the description for your error wants to
 refer to a number that is stored inside the error or some other error type or
@@ -344,7 +344,7 @@ implementation for it. And then in 1.42, it actually got the official
 deprecated warning, saying, don't use or implement this; use display instead.
 
 Ben: Yeah, I think it's interesting to review how the Rust error-handling
-library has-- situation has changed over the past few years where I think the
+library has— situation has changed over the past few years where I think the
 first, like, back in the day there was `error_chain` and then `failure`. And
 then all of these have kind of been, like superseded by, like, changes to the
 standard library itself, and have informed those changes. And so they were very
@@ -358,10 +358,10 @@ kind of have, like a nice information, and like, takes more effort in time to
 set up kind of, more fine-grained like, hey, I want, like this throws this
 error, those this error And they all work via the standard library's `Error`
 trait these days, and you can derive `Error` for any kind of, I think in this
-area you can then derive the `Error` trait for any-- as long as your `Error`
+area you can then derive the `Error` trait for any— as long as your `Error`
 enum has `Display` and all of its fields.
 
-And there's-- I even saw a crate that builds on this, where you put doc
+And there's— I even saw a crate that builds on this, where you put doc
 comments on your error types, and there's a little kind of, like formatting
 syntax for, hey, I want the error name in here or like, you know, I want the
 field that the error variant contains here in the string and then takes doc
@@ -380,7 +380,7 @@ some pretty cool experiments, like I know Jane has been working on this thing
 called `eyre`, and that one is like taking a slightly different approach to
 anyhow, and it's also a really cool experiment. And I saw recently, there's
 also an experiment to get `eyre` to use this new `track_caller` feature where
-it will track every time you use the question-mark operator-- track the
+it will track every time you use the question-mark operator— track the
 location of where that question mark happened, so that you actually get a full
 chain of where this error came from, rather than having to manually annotate
 things with like `.context`, for example, if you're familiar with how this
@@ -429,8 +429,8 @@ maybe I'm misremembering.  Maybe that was the Intel switch. I don't know.
 Jon: Yeah. No, I think you're entirely right.
 
 Ben: I'm sure someone out there is, and I'm sure that they are, you know,
-frustrated. But, you know, there is only so much that we can do-- platform
-support-- and it's still there. It's still there, just not tier one anymore.
+frustrated. But, you know, there is only so much that we can do— platform
+support— and it's still there. It's still there, just not tier one anymore.
 And you know, there's tier one platforms or whatever the Rust compiler team
 tests for automatically and gates on so you can't ship any kind of nightly that
 breaks any of these things.
@@ -438,15 +438,15 @@ breaks any of these things.
 Jon: That's true.
 
 Ben: But it doesn't mean that other platforms don't work. I believe that there
-is-- we could link to the (???) in the release notes where showing, hey, like
+is— we could link to the (???) in the release notes where showing, hey, like
 here is the Rust platform tier list. Where, here are what platforms are
 officially supported, with, like, here's what cargo supports, here's what the
 standard library's compiled for. And here is where you're on your own.
 
-Jon: Yeah, no, I think this seems like a very reasonable change, where like--
+Jon: Yeah, no, I think this seems like a very reasonable change, where like—
 this is like, there are a bunch of platforms that, like the vim code base
-supports, that no one-- someone might still be running vim on those platforms,
-but it's not-- it's as a hobby and not something that's worth spending a lot of
+supports, that no one— someone might still be running vim on those platforms,
+but it's not— it's as a hobby and not something that's worth spending a lot of
 developer resources and code complexity on, probably.
 
 So I guess that leads us to Rust 1.43, which only came out, like, a week ago,
@@ -473,9 +473,9 @@ is an item. A method is an item. A trait is an item.
 
 They're sort of like definitions, although people are going to yell at me if I
 actually say they're definitions.  And one thing that was kind of weird about
-item fragments is that it used to be that a-- if you wrote, like, a function, a
+item fragments is that it used to be that a— if you wrote, like, a function, a
 top level function, it wouldn't be considered an item that was valid in an
-implementation block -- for somewhat stupid reasons, and that's now been fixed.
+implementation block — for somewhat stupid reasons, and that's now been fixed.
 But I think this gets at a bigger point, which is: there are a bunch of things
 in Rust in both 1.42 and 1.43, where the changes are to add support for more
 syntactic things, like a top level function that takes a reference to self,
@@ -503,7 +503,7 @@ we're in an impl block. So I was expecting `fn`, but I was not expecting
 
 And so it should be syntactically valid because it's only later at the sort of
 semantic stage that we know that we're in a trait block. And similar for
-completion-- it might be that even though your program is not currently
+completion— it might be that even though your program is not currently
 syntactically valid, maybe because you're still typing, you still want the
 compiler to parser and produce as much information as they can, so that
 completion can help you wherever your cursor currently is, based on the
@@ -514,14 +514,14 @@ more liberal because of sort of stability guarantees. Can you say some more
 about this?
 
 Ben: Well, I think I'm not saying worried. I think that's too strong. I think
-the idea is that just to, like, keep in mind that-- so, for example: you might
+the idea is that just to, like, keep in mind that— so, for example: you might
 think, hey, like you have to use the example of I can't write a (???) function
 that has ampersand-self as the first argument because that makes no sense. And
 no matter what you do to the parser, that's never going to compile by itself.
-The difference is that, as you mentioned, macros-- a macro will accept this and
+The difference is that, as you mentioned, macros— a macro will accept this and
 you might ship a macro then that knows how to parse this and then transform it.
 And so when you make the syntax pass more lenient, that effectively kind of
-makes the-- that's a promise that you can't take back, in other words. And so
+makes the— that's a promise that you can't take back, in other words. And so
 people could now begin shipping code on stable Rust that has a notion of what
 is valid syntax. And you can't ever break that code because of backwards
 compatibility. And so this has kind of been going on for a while, he says. I'm
@@ -532,7 +532,7 @@ to because, you know, it's just they want to. A lot of what they're doing right
 here is for IDE support as well. I think rust-analyzer has been a big influence
 on this current thing wanting to share code with rust analyzer and extract code
 and kind of make the stack passes simpler. Is the syntax library simpler as
-well. And so that's a big part of it. And it just kind of--
+well. And so that's a big part of it. And it just kind of—
 
 Jon: I think it's a good point that this does become it becomes a part of the
 Rust specification in some sense.
@@ -544,9 +544,9 @@ also need to support this other syntax because otherwise there would be
 programs that would not work.
 
 Ben: So rather than saying, I'm worried about it. It's not that. It's more like
-I'm just saying that it is a thing to keep in mind where you can't make-- in
-languages-- it's not obvious, is the thing. Is that a language where you can
-ship syntactic-- or, you can ship procedural macros, say, on stable, that have
+I'm just saying that it is a thing to keep in mind where you can't make— in
+languages— it's not obvious, is the thing. Is that a language where you can
+ship syntactic— or, you can ship procedural macros, say, on stable, that have
 some notion of what it means to parse the language that your parser can't get
 more restrictive over time, only less restrictive.
 
@@ -565,7 +565,7 @@ like, so they look at a code example. I think so. Maybe they know Go for
 example. And in Go, constants are untyped, and so they use arbitrary precision
 arithmetic for whatever they're doing. And so, if you like, add two constants
 together in Go, they won't ever overflow. Or if they're floating point, they
-won't like-- there will be infinite precision and that kind of thing and don't
+won't like— there will be infinite precision and that kind of thing and don't
 actually kind of, like, coalesce into a type or in some kind of like, you know,
 whatever the type that you would expect until you use them in a program
 somewhere in a non-constant context.
@@ -575,8 +575,8 @@ example given in the blog post, where it's like, hey, does this mean that
 you're using arbitrary position arithmetic for doing your thing?  No, in Rust,
 the idea is that every numeric literal does have a type. And so if you type
 0.0, that is going to be one of the floating point types. If you type "42"
-that's going to be one of the numeric-- the integer types. And so as normal, as
-you would expect in Rust, you can-- the Rust compiler will use the usual type
+that's going to be one of the numeric— the integer types. And so as normal, as
+you would expect in Rust, you can— the Rust compiler will use the usual type
 inference algorithms, try and figure out what type that literal is. The unique
 thing here is that if it can, it will try and fall back for floats to `f64`,
 and for integers to `i32`.
@@ -590,7 +590,7 @@ we're going to make it `i32`.
 
 And so this fallback only kind of kicks in when there's no semantic difference,
 because it's not going to try and do anything weird or magical with your types
-here. It's going to be-- if it can't figure out-- if it performs the fallback
+here. It's going to be— if it can't figure out— if it performs the fallback
 and then something else happens, it doesn't like, go back and try again with a
 different type. It just says, hey, like, I couldn't figure it out. And so in
 this case, it's just, (???) this new change here. It's just a case of saying,
@@ -602,11 +602,11 @@ Jon: Yeah.
 
 Ben: So yeah, that's it.
 
-Jon: I mean, I think it's a good change, and it's interesting because this is--
+Jon: I mean, I think it's a good change, and it's interesting because this is—
 it's sort of a small change, right? Like this is something where if you run
 into this, the fix was pretty straightforward. But it's really just sort of
 fixing a wart in the type system. Or it's not even a wart in the type system,
-it's just, like, a little paper cut, sort of-- that someone would run into; its
+it's just, like, a little paper cut, sort of— that someone would run into; its
 easy to fix, but it should just work.
 
 And I think this is indicative of some of the fixes we've seen in latest
@@ -619,15 +619,15 @@ had this thesis that Rust is changing less over time, like it's changing less
 now than it was. And he did a bunch of analysis of the release notes, trying to
 figure out whether that was true and the blog post is worth a read.
 
-One of the conclusions he came to -- I'm gonna try to be careful not to
-misquote him here -- one of the conclusions was that over time, we are making--
+One of the conclusions he came to — I'm gonna try to be careful not to
+misquote him here — one of the conclusions was that over time, we are making—
 we're still making many changes. But the changes are, more along the lines of,
 like, fixes or slight library changes as opposed to, like, syntax changes or
 introducing new concepts in Rust. And so they're sort of lower complexity
-changes that-- and so even people's-- I think his thesis was correct in that
+changes that— and so even people's— I think his thesis was correct in that
 Rust, the language, is sort of changing less, but that doesn't mean that Rust,
 the standard library and the ecosystem, is changing less. And we see this a
-little bit in the--
+little bit in the—
 
 Ben: In the toolchain too, with cargo and all these things.
 
@@ -640,7 +640,7 @@ to add lots of new things, even though new things are still being added in the
 background.
 
 And I think this ties also into the Rust roadmap that was established for this
-year, which was this focus on, I forget what word they used-- but sort of on
+year, which was this focus on, I forget what word they used— but sort of on
 stability, that, rather than innovate, let's make this, like, the year of
 catching up to all of the rushing that we've done. Let's sort of take a breath,
 tidy up the technical debt in a sense we've built up from adding all these
@@ -655,10 +655,10 @@ Jon: Oh, yeah. So this change is is kind of funny because it's something that I
 think for most of us, it just does not matter. It's very rare that in your
 tests, you need to know the location of a binary of that crate. But for some
 crates it matters a lot, right? Think of something like bindgen, or clap where
-these are crates where the entire thing -- well, yeah, clap is a good example,
-too -- where the whole thing sort of revolves around running a binary. And you
+these are crates where the entire thing — well, yeah, clap is a good example,
+too — where the whole thing sort of revolves around running a binary. And you
 really want to test that that binary does the right thing and you want tests
-for that, that actually run the binary as opposed to-- so that you actually
+for that, that actually run the binary as opposed to— so that you actually
 test the glue code as well, right? And in order to do that, you need to be able
 to run the binary. But previously, figuring out where Rust placed the binary
 was a huge pain because, like, first of all, you need to figure out, OK, where
@@ -673,7 +673,7 @@ But even in that, like, you need to know where under "target" the binary
 actually ends up for this particular package's binary, even if someone has,
 like, renamed the directory or whatever. And this new change means that you
 just don't have to do that anymore. Cargo will just tell you, this is where the
-binary is. And I think this is-- it's worth highlighting here--
+binary is. And I think this is— it's worth highlighting here—
 
 Ben: I was gonna say, like I was curious, if you could use "cargo run" from
 within the test runner, if that would cause problems, because that would be my
@@ -682,13 +682,13 @@ for me.
 
 Jon: You can. There are actually crates to do this. And there's even a crate
 for invoking cargo from inside of tests. There some reasons why you don't
-really want to do this--
+really want to do this—
 
 Ben: I can imagine.
 
 Jon: Because, yeah, like, for example, what do you do with the output, right?
 In some sense, you don't want to run the entire cargo pipeline inside of your
-test. Instead of-- because you can't then, like, run tests in parallel, for
+test. Instead of— because you can't then, like, run tests in parallel, for
 example. It would be really nice if instead, cargo just built your binary and
 then told you where it was. And then you just invoke that binary instead. And
 that's what this lets you do.
@@ -704,7 +704,7 @@ that kind of stuff. And it also sets the output directory. So this is, where am
 I compiling this crate into?
 
 This is something you'll often see if you're using bindgen, where bindgen needs
-to know-- bindgen generates a Rust file right that you didn't then want to
+to know— bindgen generates a Rust file right that you didn't then want to
 include in your other source code.  And the way bindgen does this is bindgen
 writes it to the output directory. And then if you look at the include macro
 that the bindgen documentation tells you to write, that includes a file
@@ -737,12 +737,12 @@ to, say, hey what is the bound, what is the upper bound of `i32` or `i64` or
 `i128`?
 
 Actually, associated constants were not in Rust 1.0. The funny thing is, they
-were just barely not in Rust 1.0, they were-- It was kind of, like, down to the
-wire. And they came-- I think they landed-- I think they stabilized 1.1, in
+were just barely not in Rust 1.0, they were— It was kind of, like, down to the
+wire. And they came— I think they landed— I think they stabilized 1.1, in
 fact, but because 1.0, still had to have these constants in them, he kind of
 stop-gap solution at the time was, hey, forget about it. We'll just, like,
 because we can shadow type names, and because, you know, integer types are not,
-like, they're not keywords or anything. They're just normal types. We'll just--
+like, they're not keywords or anything. They're just normal types. We'll just—
 in the standard library, we'll just have a module called `i8`, and `i16`, and
 `i32`, and `i64`, and `u8` and so on and so on and so on. And we'll just put
 these constants in those modules. And for the most part, it'll work out.
@@ -755,16 +755,16 @@ Jon: I see. Because `u32` and `f32` there are modules as supposed to the
 primitive type.
 
 Ben: Yes. Modules, if actually, like, say you have to actually bring them up,
-you can't actually `use i32`-- you don't want to `use i32` by itself-- `use
+you can't actually `use i32`— you don't want to `use i32` by itself— `use
 std::i32` into your code because then you're shadowing the actual type name.
-That could cause problems; not any bad problems, just like annoyances-- oh,
+That could cause problems; not any bad problems, just like annoyances— oh,
 man, actually, this is a bad idea. And so really, it was one of those paper
 cuts where even experienced programmers would be like, oh, actually, yeah, this
 does suck, why does it suck so bad?
 
 And I think I was hitting this last year and I was like, man, why does this
 suck so bad? And just looking into the history of it, and it was kind of like,
-yeah-- we needed to have these constants available somewhere, and associated
+yeah— we needed to have these constants available somewhere, and associated
 constants just weren't stabilized until regrettably, like, six weeks after 1.0
 came out. But also, it gets even worse, in fact, because if you looked at the
 functions, if you look at the documentation for `i32` there is also a function
@@ -788,9 +788,9 @@ There's nothing dynamic at all about it, it's just a single value. And so this
 situation kind of languished. And like all of the comments from back in the day
 that I compiled were, like, yeah, we'll fix this someday, and then, like four
 years later, finally, like, I come along and I'm like, yeah, (???) actually
-doing this and it-- actually the whole point of this is to show that, tying
+doing this and it— actually the whole point of this is to show that, tying
 back into Steve's notion of "how often does Rust change", it actually takes a
-while to get these things through. So I wrote-- I published this RFC for
+while to get these things through. So I wrote— I published this RFC for
 approval, for comments, May 13th, 2019 and it is today April 29th, 2020. So it
 took about a year for this to go through the RFC process of, like, comment on
 this, implement it, and then stabilize it.
@@ -806,15 +806,15 @@ through, ping the lang team, or the libs team, that is, get them to kind of,
 like, sign off on it and then he did the all the effort of implementing it,
 which took us a while. Because you have to think about like, compatibility,
 and, like, now that we have, like, three ways of doing the same thing, as
-opposed to just two-- How do you document this? How do you point users to the
+opposed to just two— How do you document this? How do you point users to the
 right thing? You want to redefine the other two in terms of this first one in
-order to reduce kind of like, you know, maintenance burden or understanding--
+order to reduce kind of like, you know, maintenance burden or understanding—
 you know, like, if people are in the code, like, why is this like this? You
 don't want duplicated code in there, but also because introducing new things
 you have to stage it appropriately, where you have to have things in nightly
-before you have them in stable and so on. So it definitely-- it is a process.
+before you have them in stable and so on. So it definitely— it is a process.
 
-And so, like, people-- anyone who says, you know, Rust changes too fast, for a
+And so, like, people— anyone who says, you know, Rust changes too fast, for a
 lot of people Rust does not change fast enough. Because for Linus, he was,
 like, man, raring to go. And in many cases, people just could not move fast
 enough for him. And so any time that, like you see a change in Rust this
@@ -824,22 +824,22 @@ approval and implementation and stabilization.
 Jon: Do you think that the old versions are gonna end up being deprecated?
 
 Ben: That was one of the big questions of the RFC that we eventually kind of
-had to-- the way that I worded it finally, is that-- "it is the opinion of the
+had to— the way that I worded it finally, is that— "it is the opinion of the
 RFC author that these should be deprecated eventually, but we leave the
 timeline up to future decision."
 
 Jon: Nice.
 
-Ben: And so the idea is that-- I think the final decision was, yes, eventually
-they should be. It's not a huge deal to deprecate them. And so they might-- I
+Ben: And so the idea is that— I think the final decision was, yes, eventually
+they should be. It's not a huge deal to deprecate them. And so they might— I
 think, ideally in my mind, they would become deprecated in the 2021 edition, if
-we have one.  I'm not sure if that's a-- (???) that we're doing it at some
+we have one.  I'm not sure if that's a— (???) that we're doing it at some
 point edition, But much of next year at some other point.  And then maybe, I
 don't know, possibly hard-deprecated later on. We can do some things. I mean,
-it's not-- again, it isn't a big deal.
+it's not— again, it isn't a big deal.
 
 The whole point is kind of just, for newcomers, especially, you don't want to
-have three ways of doing the same very simple thing. It just kind of-- it's a
+have three ways of doing the same very simple thing. It just kind of— it's a
 bad look, to use the vernacular.
 
 Jon: I mean, I guess you can also do sort of the same thing they did with
@@ -851,9 +851,9 @@ Ben: I think that even in this case, `Error::description` is not actually
 becoming a hard error, I don't believe, it's just deprecated.
 
 Jon: No, it's just depreciated for now. But I think the intention, presumably,
-is for the next edition to make it-- a hard error, maybe?
+is for the next edition to make it— a hard error, maybe?
 
-Ben: That's actually-- I think there is-- that's still up in the air. I think
+Ben: That's actually— I think there is— that's still up in the air. I think
 it's actually interesting to talk about the whole, like, edition format and the
 things that we can do. Obviously, like, the point of editions is that if you
 have Rust 2015 code, a crate that's 2015, a crate that's 2018, a crate that's
@@ -863,8 +863,8 @@ changes. And that's the cool thing.
 And so, like, it is honestly, totally imaginable that you could say, hey, like,
 if I am a 2021 edition crate just like, don't let anyone using this edition use
 any thing marked as, like, you know, hard error 2021 edition. And so on. And
-then as an actual step to upgrading your code, you would then-- like, if you
-opt into the edition, you would then take it out early, or upgrade to a newer--
+then as an actual step to upgrading your code, you would then— like, if you
+opt into the edition, you would then take it out early, or upgrade to a newer—
 
 Jon: Yeah, it would almost be like a lint that becomes deny.
 
@@ -878,10 +878,10 @@ changes.
 
 Jon: Yeah, I mean, it's a good question, right? This ties back to "what are
 editions?" And "what are we allowed to do?" Certainly, one thing I guess that
-would be necessary is that, it would still-- if you compile against a
+would be necessary is that, it would still— if you compile against a
 dependency that uses an old edition, it must still be allowed to use
-description. And so the deprecation-- it would really be, like, the deprecation
-becomes a warning-- becomes an error rather than a warning in the new edition.
+description. And so the deprecation— it would really be, like, the deprecation
+becomes a warning— becomes an error rather than a warning in the new edition.
 But that doesn't mean that description itself goes away.
 
 Ben: No, it never goes away. And again, because it goes with never goes away,
@@ -893,7 +893,7 @@ program.
 
 Jon: Yeah. And I mean that we saw this with with `Error::cause` and
 `Error::source`, right? Where arguably cause should just be source. But you
-can't do that. That wouldn't be-- that's not a pipeline that we can do without,
+can't do that. That wouldn't be— that's not a pipeline that we can do without,
 like, a severe breaking change.
 
 Ben: Wouldn't be compatible.
@@ -912,7 +912,7 @@ different type.
 
 And the new primitive module is a way for you to say I want to use `i32` from
 the standard library. No matter whether there are other `i32`s that exist in
-this crate. And you really-- it's--
+this crate. And you really— it's—
 
 Ben: I do kind of do like this.
 
@@ -931,7 +931,7 @@ makes the primitives a bit less magical, like you can say, hey, these do live
 here, more or less. I think the way that the (???) put it is that actually
 might like, sort of actually making the compiler say, hey, these live here,
 adding new lang items for every single one. It kind of just uses, like,
-trickery to say, hey, like we're-- can we just export these types as they are.
+trickery to say, hey, like we're— can we just export these types as they are.
 
 Jon: Yeah, I think that's right.
 
@@ -955,10 +955,10 @@ Jon: Yeah.
 
 Ben: As opposed to the previous edition, which was kind of, like, just at the
 last minute, "what are we going to do, what are we going to do, what are we
-going to do?" And, like, freaking folks out. We have some talks from-- we are a
-podcast-- have hosted some talks from people who were involved with that
-saying, hey, that just definitely burned everyone out and did not go over--
-even though it went over well, like for users, it definitely had some-- its
+going to do?" And, like, freaking folks out. We have some talks from— we are a
+podcast— have hosted some talks from people who were involved with that
+saying, hey, that just definitely burned everyone out and did not go over—
+even though it went over well, like for users, it definitely had some— its
 toll on the developers. Yeah, we want to avoid that this time. If you want to
 get involved with 2021 edition changes, you want to speak up now and get
 involved.
@@ -974,18 +974,18 @@ was a really funny change to me because, like, Strings should obviously work as
 mutable reference to strings. But the fact that it wasn't added until 1.43
 shows just how little people use mutable references to strings. For good
 reason, right? Like, a mutable reference to a string is a really weird thing
-because-- because it's UTF-8 encoded, it's very rare that you can mutate
+because— because it's UTF-8 encoded, it's very rare that you can mutate
 anything in place anyway. And so I'm glad this impl was added. It's sort of
 there for completeness. But it was just funny to observe that no one has needed
 it until now.
 
-Ben: I think it's kind of like, goes to show too-- I think in Steve's blog post
+Ben: I think it's kind of like, goes to show too— I think in Steve's blog post
 kind of he talks about, hey, most of what is added is library types, standard
 library types, or standard library functions and types and not all kinds of
 stuff, traits. But at the same time, Rust has a strange reputation as having a
 small standard library. And so there's a kind of like discussion to be had
 about, like some standard libraries are broad, some are very deep, some are
-broad and deep and-- or, you know, could be broad or shallow, and I think Rust
+broad and deep and— or, you know, could be broad or shallow, and I think Rust
 has a very kind of like narrow but deep standard library, is the thing, where
 it's like there aren't really that many "out there" modules that give you like,
 you know, there's no web server. There's no regex, say. But like the things it
@@ -1012,7 +1012,7 @@ This is really neat, right? This means that I can say something like, always
 compile `ahash` or `fxhash` in release mode, no matter what crate I'm compiling
 on my system, because I know that the performance of it will just always matter.
 
-And I know you've been-- were surprised that there was such a thing as a system
+And I know you've been— were surprised that there was such a thing as a system
 wide cargo config in the first place. And I think this is worth pointing out
 too. So, in your in your configuration directory for cargo, which from memory
 is, like, `/home/.cargo/config.toml`, there are a bunch of different
@@ -1031,8 +1031,8 @@ what happens?  Or if you define a dependency with some feature and then some
 transitive dependency of, you, also depends on the same crate with some
 different set of features. How does cargo resolve those?  And cargo is getting
 a new version of that component, that you have to opt into.  And this fixes
-two-- well, it fixes a couple of different issues. One of the big ones is that
-currently, the resolver-- imagine that you depend on, say, `tokio`, right. So
+two— well, it fixes a couple of different issues. One of the big ones is that
+currently, the resolver— imagine that you depend on, say, `tokio`, right. So
 the `tokio` create has a bunch of different features in it, feature flags that
 enable things like, Do you want to the multi threaded run time? Do you want
 support for IO, and whatever. If you write a crate that Only needs, say, the
@@ -1057,7 +1057,7 @@ compile or run correctly.
 
 Ben: And I'm wondering if that might be the kind of thing that might, even
 though it's opt-in, it might become automatically added to your `Cargo.toml`,
-if you have-- in the new edition. And so just like how, if you have a new
+if you have— in the new edition. And so just like how, if you have a new
 edition and you type "cargo new", you automatically are using that new edition
 in your `Cargo.toml`. Maybe at some point that could be automatic
 
@@ -1085,7 +1085,7 @@ Some of them actually catch things like correctness issues.  So for example, if
 you use, say, the atomic types in Rust, then you'll be familiar with the fact
 that you have to pass in an atomic ordering for every operation and only
 certain orderings are valid for certain operations. Like, for example, you're
-not allowed to do a load with, I forget-- you're not allowed to do a load with
+not allowed to do a load with, I forget— you're not allowed to do a load with
 "release" or a store with "acquire". And previously that would just crash at
 runtime. The load operation would say "you told me to use this ordering and
 that's not valid," because ordering is just an enum, and it can't type-check
@@ -1113,7 +1113,7 @@ idiomatic, which are on for warnings by default. Then it also has this large
 category of lints that are pedantic which are turned off by default, like,
 they're allowed by default. But you can opt into them if you wish.
 
-And this could also be a good way-- just to, if you want to learn more
+And this could also be a good way— just to, if you want to learn more
 idiomatic Rust, like, turn on pedantic clippy and just see what kind of things
 it suggests.  Not all of them might be great. Some of them might give false
 positives, but they might give you a sense for ways in which you could change
@@ -1122,16 +1122,16 @@ consequently also for 1.42. You have anything else you wanna pitch?
 
 Ben: No, I'm good. So I think we're about ready to wrap this up.
 
-Jon: Nice. Do you-- are there other RustFest interviews coming? I'm forgetting
+Jon: Nice. Do you— are there other RustFest interviews coming? I'm forgetting
 whether we have more.
 
-Ben: I have one currently in the works that may or may not be-- it probably
+Ben: I have one currently in the works that may or may not be— it probably
 will be released before this one does. But then we have one last one and then,
 uh, who knows? I mean RustFest this year, because of The Incident, has gone. I
 think they're trying for a remote conference around December. So probably be,
 not the kind of circumstance that will require any kind of interview. But I
 will be trying to get interviews as I can for people who are doing cool things
-about the edition this year, I think. And so--
+about the edition this year, I think. And so—
 
 Jon: Yeah, they'll be good. That sounds like a great idea.
 

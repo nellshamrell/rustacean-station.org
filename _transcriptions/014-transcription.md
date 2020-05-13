@@ -147,7 +147,7 @@ invocation of this function, and so on.
 
 And the `..` pattern I was describing just now lets you ignore parts of a list,
 not actually name them. And so, kind of, like, throw them away, like you would
-expect from seeing an underscore in a pattern or in a "let". And so if you want
+expect from seeing an underscore in a pattern or in a `let`. And so if you want
 to name a pattern in Rust, this was kind of the crux of the syntax issue which
 held up this RFC for a long time, which is, what kind of syntax we want to
 actually have for this. If somebody actually wants to name the rest of the
@@ -675,7 +675,7 @@ like, renamed the directory or whatever. And this new change means that you
 just don't have to do that anymore. Cargo will just tell you, this is where the
 binary is. And I think this is— it's worth highlighting here—
 
-Ben: I was gonna say, like I was curious, if you could use "cargo run" from
+Ben: I was gonna say, like I was curious, if you could use `cargo run` from
 within the test runner, if that would cause problems, because that would be my
 go-to, for, like, where is the binary? Just use cargo run, and it'll find it
 for me.
@@ -1039,7 +1039,7 @@ support for IO, and whatever. If you write a crate that Only needs, say, the
 traits that `tokio` defines, but does not need anything else, it doesn't need
 the runtime. But then in your tests, in your `dev-dependencies`, you do need
 the runtime, because you need to actually run the tests. So in your
-dependencies, you list `tokio` with, like, the the "traits" feature or
+dependencies, you list `tokio` with, like, the the `traits` feature or
 whatever.  But in `dev-dependencies` you list `tokio` with, like, all features
 turned on. Then, the current resolver is actually going to compile `tokio` only
 once, regardless of whether you compile it for testing or as a dependency. And
@@ -1086,11 +1086,11 @@ you use, say, the atomic types in Rust, then you'll be familiar with the fact
 that you have to pass in an atomic ordering for every operation and only
 certain orderings are valid for certain operations. Like, for example, you're
 not allowed to do a load with, I forget— you're not allowed to do a load with
-"release" or a store with "acquire". And previously that would just crash at
+`Release` or a store with `Acquire`. And previously that would just crash at
 runtime. The load operation would say "you told me to use this ordering and
-that's not valid," because ordering is just an enum, and it can't type-check
+that's not valid," because `Ordering` is just an enum, and it can't type-check
 the particular variant. Whereas clippy will actually catch this for you, will
-say, "you're trying to do a load with the release ordering, and this will crash
+say, "you're trying to do a load with the `Release` ordering, and this will crash
 at runtime. Your program is wrong." and actually give you an an error for that
 case.  So I really highly recommend, if you're not doing it already, update
 clippy and run clippy on your programs, because it will catch correctness
@@ -1098,11 +1098,11 @@ things, in addition to just un-idiomatic code, which is sort of where clippy
 started.
 
 Ben: And to get clippy, it doesn't come by default with rustup; I think you
-need to do "rustup add component clippy", right?
+need to do `rustup add component clippy`, right?
 
 Jon: I forget. This might actually have changed with the the rustup profile
 stuff that landed a while back. But yeah, if you don't have clippy than just
-do, I think it's "rustup component add clippy". And then you get it. And you
+do, I think it's `rustup component add clippy`. And then you get it. And you
 have to add it for each different toolchain, so you want to add it for stable
 and beta and nightly, if you are using all the those different toolchains. And
 it's really neat, right? So clippy tries to be somewhat conservative by
